@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Athlete Profile Information</title>
+    <style>
+        body {
+            background-color: rgb(191, 213, 255);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(227, 229, 250, 0.984);
+            border: 1px solid #000000;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Added position relative for positioning the logout button */
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #422d61;
+        }
+
+        h2 {
+            color: #c70700;
+            border-bottom: 2px solid #193257;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #1877f2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button.logout-button {
+            background-color: #d9534f;
+            /* Red color for the logout button */
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        .welcome-message {
+            margin-bottom: 20px;
+        }
+
+        /* Improved alignment for form labels and input boxes */
+        form {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: auto;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #dddfe2;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Logout button styles */
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile-container">
+        <!-- Logout button added -->
+        <button class="logout-button" onclick="logout()">Back</button>
+
+        <h2>Update Athlete Profile Information</h2>
+        <form id="profile-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate">
+
+            <label for="gender">Gender:</label>
+            <div class="gender-container">
+                <input type="radio" id="male" name="gender" value="Male"><label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female"><label for="female">Female</label>
+            </div>
+
+            <label for="sport">Sport:</label>
+            <input type="text" id="sport" placeholder="Enter your sport" required>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" placeholder="Enter your country" required>
+
+            <label for="achievement">Achievement:</label>
+            <input type="text" id="achievement" placeholder="Enter an achievement">
+        </form>
+
+        <button class="submit-button" onclick="submit()">Update</button>
+
+       
+        <script>
+            // Retrieve the username from the query parameter
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const username = urlParams.get('username');
+
+            // Display a welcome message with the username
+            document.getElementById("username").innerText = username;
+
+
+            // submit function
+            function submit() {
+                // Redirect to welcome.html
+                window.location.href = 'welcome.html';
+            }
+
+            // Logout function
+            function logout() {
+                // Redirect to welcome.html
+                window.location.href = 'welcome.html';
+            }
+
+
+            function submit() {
+                // Get user input values
+                var name = document.getElementById("name").value;
+                var birthdate = document.getElementById("birthdate").value;
+                var selectedGender = document.querySelector('input[name="gender"]:checked').value;
+                var sport = document.getElementById("sport").value;
+                var country = document.getElementById("country").value;
+                var achievement = document.getElementById("achievement").value;
+
+                // Check if both name and birthdate are entered
+                if (name.trim() !== "" && birthdate.trim() !== "") {
+                    // Redirect to welcome.html with the user input values as parameters
+                    window.location.href = "welcome.html?name=" + encodeURIComponent(name) +
+                        "&birthdate=" + encodeURIComponent(birthdate) +
+                        "&gender=" + encodeURIComponent(selectedGender) +
+                        "&sport=" + encodeURIComponent(sport) +
+                        "&country=" + encodeURIComponent(country) +
+                        "&achievement=" + encodeURIComponent(achievement);
+                } else {
+                    alert("Please input your name and birthdate.");
+                }
+                
+            }
+
+            // Update basic information
+            document.getElementById("athlete-name").innerText = name;
+            document.getElementById("athlete-birthdate").innerText = birthdate;
+            document.getElementById("athlete-gender").innerText = selectedGender;
+            document.getElementById("athlete-sport").innerText = sport;
+            document.getElementById("athlete-country").innerText = country;
+
+            // Update achievements
+            var achievementsList = document.getElementById("achievements-list");
+            var newAchievementItem = document.createElement("li");
+            newAchievementItem.innerText = achievement;
+            achievementsList.appendChild(newAchievementItem);
+
+            // Clear the form
+            document.getElementById("profile-form").reset();
+
+
+
+        </script>
+
+
+    </div>
+</body>
+
+</html>
